@@ -131,7 +131,7 @@ public class TrailerController {
 	}
 
 	/**
-	 * Handle REST GET request and used to get Trailers for specific TrailerPlateNumber
+	 * Handle the request REST GET request and used to get Trailers for specific TrailerPlateNumber
 	 *
 	 * @param dispositionId : disposition id
 	 * @param startDate     : disposition start date
