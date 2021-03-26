@@ -81,7 +81,7 @@ public class CarrierController {
 	/**
 	 * Handle REST PUT request and used to update Carrier
 	 *
-	 * @param id : id of the carrier to be updated
+	 * @param id : id of the carrier to be updated of carrier
 	 * @return ResponseEntity<Map < String, Object>> : return updated record
 	 */
 	@PutMapping(value = "{id}")
