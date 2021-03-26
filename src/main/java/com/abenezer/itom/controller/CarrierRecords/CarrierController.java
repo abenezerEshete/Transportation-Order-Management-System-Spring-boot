@@ -66,6 +66,7 @@ public class CarrierController {
 	/**
 	 * Handle REST POST request and used to add Carrier to the table
 	 *
+	 * @param carrier : carrier record to save in the database
 	 * @return ResponseEntity<Map < String, Object>> : return saved record
 	 */
 	@PostMapping("/")
