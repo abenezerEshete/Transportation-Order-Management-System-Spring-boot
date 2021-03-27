@@ -1,5 +1,4 @@
 #!/bin/sh
-cd c:/xampp/htdocs/demoproject
 git config credential.helper store
 git push --all
 
