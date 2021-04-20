@@ -7,7 +7,7 @@ package com.abenezer.itom.model.world;
 
 /**
  *
- * @author EfthymiosChatziathanasiadis
+ * @author AbenezerEsheteTilahu
  */
 public class Country {
     String country;

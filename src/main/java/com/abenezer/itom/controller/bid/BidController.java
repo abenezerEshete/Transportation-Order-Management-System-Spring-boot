@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.abenezer.itom.controller.CarrierRecords;
+package com.abenezer.itom.controller.bid;
 
 import com.abenezer.itom.Service.CarrierRecords.CarrierRegistryDatabase;
 import com.abenezer.itom.controller.util.Util;
 import com.abenezer.itom.model.CarrierRecords.Carrier;
-import com.abenezer.itom.repository.CarrierRepository;
+import com.abenezer.itom.model.bid.Bid;
+import com.abenezer.itom.repository.BidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Controller class responsible for handling Carrier related CRUD operation requests.
@@ -25,31 +27,27 @@ import java.util.Map;
  */
 
 @RestController()
-@RequestMapping("/api/v1/carrier")
-public class CarrierController {
+@RequestMapping("/api/v1/bid")
+public class BidController {
 
 
-	final
-	CarrierRepository carrierRepository;
-
-	private final CarrierRegistryDatabase carrierRegistryDatabase;
+	private final BidRepository bidRepository;
 
 	@Autowired
-	public CarrierController (CarrierRegistryDatabase carrierRegistryDatabase, CarrierRepository carrierRepository) {
-		this.carrierRegistryDatabase = carrierRegistryDatabase;
-		this.carrierRepository = carrierRepository;
+	public BidController (BidRepository bidRepository) {
+		this.bidRepository = bidRepository;
 	}
 
 
 	/**
-	 * Handle REST get request and used to get Carrier list
+	 * Handle REST get request and used to get bid list
 	 *
 	 * @return ResponseEntity<Map < String, Object>> :list of records
 	 */
 	@GetMapping(path = "/")
-	private ResponseEntity<Map<String, Object>> getCarrier () {
-		List<Carrier> carriers =carrierRepository.findAll ();
-		Map<String, Object> map = Util.buildResponse (carriers);
+	private ResponseEntity<Map<String, Object>> getBidList () {
+		List<Bid> bidList = bidRepository.findAll ();
+		Map<String, Object> map = Util.buildResponse (bidList);
 		return new ResponseEntity<> (map, HttpStatus.OK);
 	}
 
@@ -61,9 +59,10 @@ public class CarrierController {
 	 * @return ResponseEntity<Map < String, Object>> : return updated record
 	 */
 	@GetMapping(value = "{id}")
-	public ResponseEntity<Map<String, Object>> getCarrierById (@PathVariable int id) {
-		Carrier carriers = carrierRegistryDatabase.getCarrierById (id);
-		Map<String, Object> map = Util.buildResponse (carriers);
+	public ResponseEntity<Map<String, Object>> getBidById (@PathVariable int id) {
+		Optional<Bid> optionalBid = bidRepository.findById (id);
+		Bid  bid = optionalBid.isPresent ()?optionalBid.get ():null;
+		Map<String, Object> map = Util.buildResponse (bid);
 		return new ResponseEntity<> (map, HttpStatus.OK);
 	}
 
@@ -75,12 +74,10 @@ public class CarrierController {
 	 * @return ResponseEntity<Map < String, Object>> : return saved record
 	 */
 	@PostMapping("/")
-	public ResponseEntity<Map<String, Object>> addCarrier (@RequestBody @Valid Carrier carrier) {
+	public ResponseEntity<Map<String, Object>> addBid (@RequestBody @Valid Bid bid) {
 
-		System.out.println ("hiiiii:"+carrier);
-		Carrier savedCarrier = carrierRegistryDatabase.addCarrier (carrier);
-		System.out.println ("Saved c: "+savedCarrier);
-		Map<String, Object> map = Util.buildResponse (savedCarrier);
+			Bid savedBid = bidRepository.save (bid);
+		Map<String, Object> map = Util.buildResponse (savedBid);
 		return new ResponseEntity<> (map, HttpStatus.CREATED);
 	}
 
@@ -92,28 +89,28 @@ public class CarrierController {
 	 * @return ResponseEntity<Map < String, Object>> : return updated record
 	 */
 	@PutMapping(value = "{id}")
-	public ResponseEntity<Map<String, Object>> editCarrier (
+	public ResponseEntity<Map<String, Object>> editBid (
 		@PathVariable("id") int id,
-		@RequestBody @Valid Carrier carrier) {
+		@RequestBody @Valid Bid bid) {
 
-		carrier.setId (id);
-		Carrier savedCarrier = carrierRegistryDatabase.editCarrier (carrier);
-		Map<String, Object> map = Util.buildResponse (savedCarrier);
+		bid.setId (id);
+		Bid savedBid = bidRepository.save (bid);
+		Map<String, Object> map = Util.buildResponse (savedBid);
 
 		return new ResponseEntity<> (map, HttpStatus.OK);
 	}
 
 
 	/**
-	 * Handle REST DELETE request and used to Delete Carrier record.
+	 * Handle REST DELETE request and used to Delete Bid record.
 	 *
 	 * @param id : id of the carrier to be deleted
 	 * @return ResponseEntity<Map < String, Object>> : return updated record
 	 */
 	@DeleteMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteCarrier (@PathVariable int id) {
-		carrierRegistryDatabase.deleteById (id);
+	public void deleteBId(@PathVariable int id) {
+		bidRepository.deleteById (id);
 	}
 
 

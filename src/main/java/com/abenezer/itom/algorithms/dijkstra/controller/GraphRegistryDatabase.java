@@ -49,6 +49,7 @@ public class GraphRegistryDatabase {
 
 
 	public List<Vertex> getVertices () {
+		nodes =  vertexRepository.findAll ();
 		return nodes;
 	}
 
@@ -79,7 +80,7 @@ public class GraphRegistryDatabase {
 		for (Vertex node : nodes) {
 			String city = node.getCity ();
 			String country = node.getCountry ();
-			if (newCountry.equals (country) && newCity.equals (city)) {
+			if (newCountry  != null && newCity != null && newCountry.equals (country) && newCity.equals (city)) {
 				exists = true;
 				break;
 			}
@@ -91,10 +92,10 @@ public class GraphRegistryDatabase {
 
 	}*/
 	public Edge addEdge (Edge edge) {
-		double sourceLat = edge.getSource ().getLat ();
-		double destinationLat = edge.getDestination ().getLat ();
-		double sourceLon = edge.getSource ().getLong ();
-		double destinationLon = edge.getDestination ().getLong ();
+		double sourceLat = edge.getSource ().latitude ();
+		double destinationLat = edge.getDestination ().latitude ();
+		double sourceLon = edge.getSource ().longitude ();
+		double destinationLon = edge.getDestination ().longitude ();
 		double weight = this.computeWeight (sourceLat, destinationLat, sourceLon, destinationLon, 0.0, 0.0);
 
 		if (!edgeAlreadyExists (edge.getSource (), edge.getDestination ())) {
@@ -124,10 +125,10 @@ public class GraphRegistryDatabase {
 	}
 
 	public Edge editEdge (Edge edge) {
-		double sourceLat = edge.getSource ().getLat ();
-		double destinationLat = edge.getDestination ().getLat ();
-		double sourceLon = edge.getSource ().getLong ();
-		double destinationLon = edge.getDestination ().getLong ();
+		double sourceLat = edge.getSource ().latitude ();
+		double destinationLat = edge.getDestination ().latitude ();
+		double sourceLon = edge.getSource ().longitude ();
+		double destinationLon = edge.getDestination ().longitude ();
 		double weight = this.computeWeight (sourceLat, destinationLat, sourceLon, destinationLon, 0.0, 0.0);
 		return edgeRepository.save (edge);
 	}
@@ -151,7 +152,7 @@ public class GraphRegistryDatabase {
 	public Vertex getVertexById (int id) {
 		Vertex vertex = null;
 		for (Vertex node : nodes) {
-			if (vertex.getId ().equals (id)) {
+			if (vertex.getId () == (id)) {
 				vertex = node;
 				break;
 			}

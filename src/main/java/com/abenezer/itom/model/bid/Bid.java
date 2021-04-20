@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.abenezer.itom.model.CustomerRecords;
+package com.abenezer.itom.model.bid;
 
-import com.abenezer.itom.algorithms.dijkstra.model.Vertex;
+import com.abenezer.itom.model.CarrierRecords.*;
+import com.abenezer.itom.model.CustomerOrders.CustomerOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,13 @@ import java.io.Serializable;
 /**
  * @author AbenezerEsheteTilahu
  */
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "customer")
-public class Customer implements Serializable {
+@Entity(name = "bid")
+public class Bid implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,20 +33,15 @@ public class Customer implements Serializable {
 	@Column(name = "id", nullable = false)
 	private int id;
 
-	@Column(name = "company", nullable = false)
-	private String company;
+	@OneToOne
+	private CustomerOrder customerOrder;
 
-	@Column(name = "phone", nullable = false)
-	private String phone;
+	@OneToOne
+	private Carrier carrier;
 
-	@OneToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
-	private Vertex address;
-
-
+	@Column(name = "bid_price", nullable = false)
+	private double bidPrice;
 
 
-	@Override
-	public String toString () {
-		return phone + "," + company + "," + address;
-	}
+
 }

@@ -5,10 +5,7 @@
  */
 package com.abenezer.itom.algorithms.dijkstra.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "edge")
 public class Edge implements Serializable {
 
@@ -28,7 +26,7 @@ public class Edge implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private int id;
 
 	@OneToOne
 	private       Vertex source;

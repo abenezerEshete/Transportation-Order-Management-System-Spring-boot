@@ -13,12 +13,11 @@ import com.abenezer.itom.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * @author EfthymiosChatziathanasiadis
+ * @author AbenezerEsheteTilahu
  */
 @Service
 public class CustomerRegistryDatabase {
@@ -29,45 +28,28 @@ public class CustomerRegistryDatabase {
 
 	private final DispositionRegistryDatabase dispositionRegistryDatabase;
 
-	List<Customer> customers = new ArrayList<> ();
 
 	@Autowired
 	private CustomerRegistryDatabase (CustomerRepository customerRepository, GraphRegistryDatabase graphDatabase, CustomerOrderRegistryDatabase customerOrderRegistryDatabase, DispositionRegistryDatabase dispositionRegistryDatabase) {
 		this.customerRepository = customerRepository;
 		this.customerOrderRegistryDatabase = customerOrderRegistryDatabase;
 		this.dispositionRegistryDatabase = dispositionRegistryDatabase;
-		this.loadCustomers ();
-	}
-
-	public Customer addCustomer (Customer customer) {
-		customers.add (customer);
-		return customerRepository.save (customer);
-	}
-
-	public Customer getCustomerOfOrder (int id) {
-		Customer customer = null;
-		if (customers == null) {
-			this.getCustomers ();
-		}
-		Iterator<Customer> it = customers.iterator ();
-		while (it.hasNext ()) {
-			customer = it.next ();
-			if (customer.getId () == id) {
-				break;
-			}
-		}
-
-		return customer;
-	}
-
-	private void loadCustomers () {
-		customers = customerRepository.findAll ();
-
 	}
 
 	public List<Customer> getCustomers () {
+		return customerRepository.findAll ();
+	}
 
-		return customers;
+	public Customer addCustomer (Customer customer) {
+		return customerRepository.save (customer);
+	}
+
+	public Customer getCustomerById (int id) {
+		Optional<Customer> optionalCustomer = customerRepository.findById (id);
+		if (optionalCustomer.isPresent ())
+			return optionalCustomer.get ();
+		else
+			return null;
 	}
 
 	public Customer editCustomer (Customer customer) {
@@ -76,14 +58,12 @@ public class CustomerRegistryDatabase {
 
 	public void delete (Customer customer) {
 		customerRepository.delete (customer);
-		this.loadCustomers ();
 		customerOrderRegistryDatabase.loadOrders ();
 		dispositionRegistryDatabase.loadDispositions ();
 	}
 
 	public void deleteById (int customerId) {
 		customerRepository.deleteById (customerId);
-		this.loadCustomers ();
 		customerOrderRegistryDatabase.loadOrders ();
 		dispositionRegistryDatabase.loadDispositions ();
 	}

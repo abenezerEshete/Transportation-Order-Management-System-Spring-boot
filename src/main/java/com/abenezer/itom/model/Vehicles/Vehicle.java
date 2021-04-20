@@ -24,7 +24,7 @@ public class Vehicle implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private int id;
 
 	@Column(name = "availabilityStatus", nullable = false)
 	private boolean availabilityStatus;
@@ -41,13 +41,6 @@ public class Vehicle implements Serializable {
 	public Vehicle () {
 	}
 
-	public Vehicle (int id, boolean availabilityStatus, String plateNumber, boolean conditionStatus, Vertex address) {
-		this.id = id;
-		this.availabilityStatus = availabilityStatus;
-		this.plateNumber = plateNumber;
-		this.conditionStatus = conditionStatus;
-		this.address = address;
-	}
 
 	public Vehicle (int id, boolean availabilityStatus, String plateNumber, boolean conditionStatus, int addressID) {
 		this.id = id;
@@ -66,12 +59,7 @@ public class Vehicle implements Serializable {
 	}
 
 	public int getId () {
-
-            System.out.println ("this does have value?: "+this);
-            System.out.println ("id does have value?: "+id);
-            if(id != null)
 		return id;
-            return 0;
 	}
 
 	public void setId (int id) {
@@ -79,7 +67,7 @@ public class Vehicle implements Serializable {
 	}
 
 	public String getLocation () {
-		return this.address.getCity () + ", " + this.address.getCountry ();
+		return address != null? (this.address.getCity () + ", " + this.address.getCountry ()) : "";
 	}
 
 	public Vertex getAddress () {
@@ -134,9 +122,6 @@ public class Vehicle implements Serializable {
 		return this.plateNumber;
 	}
 
-	public void setId (Integer id) {
-		this.id = id;
-	}
 
 	public boolean isAvailabilityStatus () {
 		return availabilityStatus;

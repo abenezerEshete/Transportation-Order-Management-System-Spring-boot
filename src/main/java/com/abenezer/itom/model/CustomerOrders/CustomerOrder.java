@@ -11,6 +11,7 @@
  import com.abenezer.itom.model.systemUserRecords.SystemUser;
  import lombok.AllArgsConstructor;
  import lombok.Getter;
+ import lombok.NoArgsConstructor;
  import lombok.Setter;
 
  import javax.persistence.*;
@@ -22,16 +23,19 @@
  @Getter
  @Setter
  @AllArgsConstructor
+ @NoArgsConstructor
  @Entity(name = "customerorder")
  public class CustomerOrder  implements Serializable {
 
 
 	 private static final long serialVersionUID = 1L;
 
+
+
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 @Column(name = "id", nullable = false)
-	 private Integer id;
+	 @Column(name = "id", nullable = false, unique = true)
+	 private int id;
 
 	 @Column(name = "type", nullable = false)
 	 private String type;
@@ -43,13 +47,16 @@
 	 private String deliveryDate;
 
 	 @Column(name = "kg", nullable = false)
-	 private Double kg;
+	 private Double kg = 0.0;
 
 	 @OneToOne
 	 private Trailer trailer;
 
 	 @Column(name = "tarrif", nullable = false)
-	 private Double tarrif;
+	 private Double tarrif =0.0;
+
+	 @Column(name = "status", nullable = false)
+	 String status;
 
 	 @OneToOne
 	 private Customer customer;
@@ -61,26 +68,13 @@
 	 private Vertex originAddress;
 
 	 @OneToOne
-	 private Vertex destinationAddress;
+	 private Vertex destinationAddress ;
 
 	 @OneToOne
 	 SystemUser disponent;
 
-	 String status;
 
 
-	 /*public CustomerOrder(int id, String type, String orderDate, String deliveryDate, double quantity, String plateNumber, double tarrif, Customer customer, SystemUser disponent  ){
-	     this.id=id;
-	     this.type=type;
-	     this.orderDate=orderDate;
-	     this.deliveryDate=deliveryDate;
-	     this.kg=quantity;
-	     this.trailer=trailer;
-	     this.tarrif=tarrif;
-	     this.customer=customer;
-	     this.disponent=disponent;
-
-	 }*/
 	 public CustomerOrder (int id, String type, Vertex originAddress, Vertex destinationAddess,
 			       String orderDate, String deliveryDate, double quantity, Trailer trailer,
 			       double tarrif, Customer customer, SystemUser disponent) {
@@ -127,7 +121,7 @@
 	 }
 
 	 public String getTrailerPlate () {
-		 return this.trailer.getPlateNumber ();
+		 return trailer != null? this.trailer.getPlateNumber () : null;
 	 }
 
 	 public void setTrailer (Trailer trailer) {
@@ -151,7 +145,8 @@
 	 }
 
 	 public String getOrigin () {
-		 return this.originAddress.getCity () + ", " + this.originAddress.getCountry ();
+
+	 	return this.originAddress != null? this.originAddress.getCity () + ", " + this.originAddress.getCountry () : null;
 	 }
 
 	 public void setDestinationAddress (Vertex address) {
@@ -163,7 +158,7 @@
 	 }
 
 	 public String getDestination () {
-		 return this.destinationAddress.getCity () + ", " + this.destinationAddress.getCountry ();
+		 return destinationAddress!= null? this.destinationAddress.getCity () + ", " + this.destinationAddress.getCountry ():null;
 	 }
 
 	 public int getId () {
@@ -212,7 +207,7 @@
 	 }
 
 	 public String getCustomerCompany () {
-		 return this.customer.getCompany ();
+		 return  customer != null? this.customer.getCompany (): null;
 	 }
 
 	 public void setCustomer (Customer customer) {
@@ -224,7 +219,7 @@
 	 }
 
 	 public String getDisponentSurname () {
-		 return this.disponent.getSurname ();
+		 return disponent != null? this.disponent.getSurname (): null;
 	 }
 
 	 public void setDisponent (SystemUser user) {

@@ -11,5 +11,7 @@ package com.abenezer.itom.model.CarrierRecords;
  */
 public interface Mode {
     public  void action(Carrier carrier);
+
+
     
 }

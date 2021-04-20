@@ -28,7 +28,7 @@ public class CarrierRegistryDatabase {
 	@Autowired
 	private CarrierRegistryDatabase (CarrierRepository carrierRepository) {
 		this.carrierRepository = carrierRepository;
-		this.loadCarriers ();
+		this.getCarriers ();
 	}
 
 // TODO: create user defined exception.to handle integrity cases
@@ -38,6 +38,7 @@ public class CarrierRegistryDatabase {
 	}
 
 	public Carrier addCarrier (Carrier carrier) {
+		System.out.println ("here 2"+carrier);
 		return carrierRepository.save (carrier);
 	}
 
@@ -57,14 +58,10 @@ public class CarrierRegistryDatabase {
 		return carrier;
 	}
 
-	private void loadCarriers () {
 
-		if (carriers.isEmpty ()) {
-			carriers = carrierRepository.findAll ();
-		}
-	}
 
 	public List<Carrier> getCarriers () {
+			carriers = carrierRepository.findAll ();
 		return carriers;
 	}
 

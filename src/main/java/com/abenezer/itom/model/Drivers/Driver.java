@@ -6,10 +6,7 @@
 package com.abenezer.itom.model.Drivers;
 
 import com.abenezer.itom.algorithms.dijkstra.model.Vertex;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -22,6 +19,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "driver")
 public class Driver implements Serializable {
 
@@ -30,7 +28,7 @@ public class Driver implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private int id;
 
 	@Column(name = "availabilityStatus", nullable = false)
 	private boolean availabilityStatus;
@@ -67,33 +65,16 @@ public class Driver implements Serializable {
 		return this.address;
 	}
 
-	public String getLocation () {
-		return this.address.getCity () + ", " + this.address.getCountry ();
-	}
-
-	public boolean getAvailabilityStatus () {
-		return this.availabilityStatus;
-	}
 
 	public void setAvailabilityStatus (boolean availability) {
 		this.availabilityStatus = availability;
 	}
 
-	public String getFirstName () {
-		return this.firstName;
-	}
-
-	public void setFirstName (String name) {
-		this.firstName = name;
-	}
 
 	public String getLastName () {
 		return this.lastName;
 	}
 
-	public void setLastName (String last) {
-		this.lastName = last;
-	}
 
 	@Override
 	public String toString () {

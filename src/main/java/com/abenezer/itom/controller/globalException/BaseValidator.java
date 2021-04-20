@@ -17,7 +17,7 @@ import java.util.Date;
  *
  * @param <T> class definition of the form Javabean
  */
-@Component
+//@Component
 public abstract class BaseValidator<T> implements Validator {
 
   private static final Logger LOGGER = Logger.getLogger(BaseValidator.class);

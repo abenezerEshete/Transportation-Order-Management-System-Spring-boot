@@ -30,7 +30,7 @@ public class Disposition implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private int id;
 
 	@OneToOne
 	Carrier carrier;

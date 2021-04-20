@@ -181,7 +181,7 @@ public class DriversDatabaseRegistry {
 		ArrayList<Driver> availableDrivers = new ArrayList<Driver> ();
 		try {
 			this.getDrivers ();
-			ArrayList<Driver> driversNearBy = this.getDriversNearBy (Integer.parseInt (dispositionn.getOriginAddress ().getId ()), newStart);
+			ArrayList<Driver> driversNearBy = this.getDriversNearBy (dispositionn.getOriginAddress ().getId (), newStart);
 			for (int i = 0; i < driversNearBy.size (); i++) {
 				Driver driver = driversNearBy.get (i);
 				ArrayList<Disposition> truckDispositions = dispositionsDatabase.getDispositionsOfDriver (driver.getId ());
@@ -218,7 +218,7 @@ public class DriversDatabaseRegistry {
 	public ArrayList<Driver> getAvailableDrivers (Date newStart, Date newFinish, Vertex newDispositionLocation) throws ParseException {
 		this.getDrivers ();
 		ArrayList<Driver> availableDrivers = new ArrayList<Driver> ();
-		ArrayList<Driver> driversNearBy = this.getDriversNearBy (Integer.parseInt (newDispositionLocation.getId ()), newStart);
+		ArrayList<Driver> driversNearBy = this.getDriversNearBy ((newDispositionLocation.getId ()), newStart);
 		for (int i = 0; i < driversNearBy.size (); i++) {
 			Driver driver = driversNearBy.get (i);
 			ArrayList<Disposition> truckDispositions = dispositionsDatabase.getDispositionsOfDriver (driver.getId ());
@@ -258,7 +258,7 @@ public class DriversDatabaseRegistry {
 					Disposition latestOrder = getLatestDispositionAssigned (driverDispositions, newStart);
 					driverLocation = latestOrder.getDestinationAddress ();
 				}
-				if (driverLocation.getId ().equals (newDispositionLocation))
+				if (driverLocation.getId () == (newDispositionLocation))
 					driversNearBy.add (driver);
 
 			}

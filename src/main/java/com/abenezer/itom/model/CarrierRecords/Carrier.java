@@ -6,10 +6,9 @@
 package com.abenezer.itom.model.CarrierRecords;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +20,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "carrier")
 public class Carrier implements Serializable {
 
@@ -29,24 +29,21 @@ public class Carrier implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private int id;
 
 	@Column(name = "company", nullable = false)
 	private String company;
 
-	@Column(name = "role", nullable = false)
-	private int role;
+//	@Column(name = "role", nullable = false)
+//	private int role = 0;
 
 	@Column(name = "mode", nullable = false)
 	private String mode;
 
 
-	public Carrier () {
-	}
-
 	public Carrier (String company, CarrierRole role, Mode mode) {
 		this.company = company;
-		this.role =(role instanceof Internal?0:1);
+		//	this.role =(role instanceof Internal?0:1);
 		this.mode = mode.toString ();
 	}
 
@@ -54,23 +51,25 @@ public class Carrier implements Serializable {
 		this.id = id;
 		this.company = company;
 		this.mode = mode.toString ();
-		this.role = (role instanceof Internal?0:1);
+		//this.role = (role instanceof Internal?0:1);
 	}
 
 	public CarrierRole getRole () {
-		Object o = this.role;
-		return (CarrierRole) o;
+		//Object o = this.role;
+		return null;//(CarrierRole) o;
 	}
 
 	public String getCarrierRole () {
-		Object o = this.role;
-		CarrierRole carrierRole = (CarrierRole) o;
-		if (carrierRole instanceof Internal) return "Internal";
-		else return "External";
+		//	Object o = this.role;
+//		CarrierRole carrierRole = (CarrierRole) o;
+//		if (carrierRole instanceof Internal) return "Internal";
+		//else
+		return "External";
 	}
 
 	public void setRole (CarrierRole role) {
-		this.role = (role instanceof Internal?0:1);
+
+		//this.role = (role instanceof Internal?0:1);
 	}
 
 	public int getId () {
@@ -90,13 +89,23 @@ public class Carrier implements Serializable {
 	}
 
 	public Mode getMode () {
-		Object o = this.mode;
-		return (Mode) o;
+		Mode o = null;
+
+
+		return o;
 	}
 
 	public String getCarrierMode () {
-		Object o = this.mode;
-		Mode m = (Mode) o;
+
+		Mode m = null;
+		if(mode == null) return null;
+		if ("Road".equalsIgnoreCase (mode.toString ()))
+			m = new Road ();
+		if ("Sea".equalsIgnoreCase (mode.toString ()))
+			m = new Sea ();
+		if ("Rail".equalsIgnoreCase (mode.toString ()))
+			m = new Rail ();
+
 
 		if (m instanceof Road) {
 			return "Road";
@@ -105,6 +114,7 @@ public class Carrier implements Serializable {
 		} else {
 			return "Rail";
 		}
+
 	}
 
 	public void setMode (Mode mode) {

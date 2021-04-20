@@ -175,28 +175,6 @@ public class DispositionRegistryDatabase implements DirectionsServiceCallback {
 
 	}
 
-	public void editInternalDisposition (Disposition disposition, Vertex origin, Vertex destination,
-					     Carrier carrier, String startDate, String finishDate, double tarrif,
-					     CustomerOrder order, Truck truck, Driver driver) {
-
-		String sql = "UPDATE Disposition SET  carrierId='" + carrier.getId () + "', startDate='" + startDate + "', "
-			+ "finishDate='" + finishDate + "', tarrif='" + tarrif + "', customerOrderId='"
-			+ "" + order.getId () + "', truckId='" + truck.getId () + "', "
-			+ "driverId='" + driver.getId () + "', originAddressId='" + origin.getId () + "', "
-			+ "destinationAddressId='" + destination.getId () + "' WHERE id='" + disposition.getId () + "';";
-		disposition.setCarrier (carrier);
-		disposition.setStartDate (startDate);
-		disposition.setFinishDate (finishDate);
-		disposition.setTarrif (tarrif);
-		disposition.setCustomerOrder (order);
-		disposition.setTruck (truck);
-		disposition.setDriver (driver);
-		disposition.setOrigin (origin);
-		disposition.setDestination (destination);
-
-		dispositionRepository.save (disposition);
-
-	}
 
 	public void delete (Disposition disposition) {
 

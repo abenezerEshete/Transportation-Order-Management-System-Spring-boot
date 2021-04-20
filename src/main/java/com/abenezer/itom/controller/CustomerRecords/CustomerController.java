@@ -57,7 +57,7 @@ public class CustomerController {
 	 */
 	@GetMapping(value = "{id}")
 	public ResponseEntity<Map<String, Object>> getCarrierById (@PathVariable int id) {
-		Customer customerOrder = customerRegistryDatabase.getCustomerOfOrder (id);
+		Customer customerOrder = customerRegistryDatabase.getCustomerById (id);
 		Map<String, Object> map = Util.buildResponse (customerOrder);
 		return new ResponseEntity<> (map, HttpStatus.OK);
 	}
@@ -71,7 +71,9 @@ public class CustomerController {
 	@PostMapping("/")
 	public ResponseEntity<Map<String, Object>> addCarrier (@RequestBody @Valid Customer customer) {
 
+		System.out.println ("input Customer: "+customer);
 		Customer savedCustomer = customerRegistryDatabase.addCustomer (customer);
+		System.out.println ("saved customer: "+savedCustomer);
 		Map<String, Object> map = Util.buildResponse (savedCustomer);
 		return new ResponseEntity<> (map, HttpStatus.CREATED);
 	}

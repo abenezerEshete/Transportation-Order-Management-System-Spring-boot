@@ -52,7 +52,7 @@ public class WorldRegistryDatabase {
 			cities = locations
 				.stream ()
 				.filter (loc -> loc.getCountry ().equalsIgnoreCase (country.getCountry ()))
-				.map (loc -> new City (loc.getCity (), loc.getLatitude (), loc.getLon (), country))
+				.map (loc -> new City (loc.getCity (), loc.getLat (), loc.getLon (), country))
 				.collect (Collectors.toList ());
 		} catch (Exception e) {
 			e.printStackTrace ();
